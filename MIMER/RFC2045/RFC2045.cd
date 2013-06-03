@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MIMER.RFC2045.Entity" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAACAAAABQAAIiAAAIAAgAAAAAAAAgAQ=</HashCode>
+      <FileName>RFC2045\Entity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Fields" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2045.Message">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AgBCAEAwBgBAAgFEIIABgAgABEAIgIBoAAIMgYAIAgA=</HashCode>
+      <FileName>RFC2045\Message.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Attachments" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2045.MailReader" Collapsed="true">
+    <Position X="10.25" Y="6.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAARCIAAAFBBgAAJgAAgCgQQEgAAACAAAAAA=</HashCode>
+      <FileName>RFC2045\MailReader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Decoders" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC822.Field" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAABAAQAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>RFC822\Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIMER.RFC2045.ContentTypeField" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAIAAAAAAAAAAAAAAAAAAAABAAAAAAAYAAAAAQAAA=</HashCode>
+      <FileName>RFC2045\ContentTypeField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIMER.RFC2045.ContentTransferEncodingField" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RFC2045\ContentTransferEncodingField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIMER.RFC2045.MultipartEntity" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>RFC2045\MultipartEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="BodyParts" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2045.QuotedPrintableDecoder" Collapsed="true">
+    <Position X="7.75" Y="7" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gAAAhACEQAGBAAAAAAAAAAAAQAAAQEAAQACAQAABAAA=</HashCode>
+      <FileName>RFC2045\QuotedPrintableDecoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2045.Base64Decoder" Collapsed="true">
+    <Position X="7.75" Y="8" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAA=</HashCode>
+      <FileName>RFC2045\Base64Decoder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2045.ContentTypeFieldParser" Collapsed="true">
+    <Position X="3.25" Y="4" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AYAgIAAGAAAACAAAAAAAAAgAAAIEAACABAQRAQQAQUQ=</HashCode>
+      <FileName>RFC2045\ContentTypeFieldParser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Original" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MIMER.RFC2045.ContentTransferEncodingFieldParser" Collapsed="true">
+    <Position X="0.5" Y="4" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gAAgAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAEQ=</HashCode>
+      <FileName>RFC2045\ContentTransferEncodingFieldParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIMER.RFC2045.NullMessage" Collapsed="true">
+    <Position X="7.75" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgBgAAAAEAAIABAAAABAAIgAAoAAAAAQAAAAA=</HashCode>
+      <FileName>RFC2045\NullMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Net.Mail.MailAddress" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="MIMER.RFC822.FieldParser" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAEAAAAAAAUAAAAAgAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>RFC822\FieldParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2045.Attachment">
+    <Position X="7.75" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EBAAIAAAAAAAAAgAAIAAAAQAEAAAABAAAQAAAAAQQAA=</HashCode>
+      <FileName>RFC2045\Attachment.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.FieldParserDecorator" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>FieldParserDecorator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC2183.ContentDispositionFieldParser" Collapsed="true">
+    <Position X="2" Y="5.25" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAQAAAAAAAAAAQAAIQBAAAAQEQ=</HashCode>
+      <FileName>RFC2183\ContentDispositionFieldParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MIMER.IMailMessage" Collapsed="true">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="From" Type="System.Net.Mail.MailAddress" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.5" Y="1.5" />
+        <Point X="10.26" Y="1.5" />
+        <Point X="10.26" Y="0.683" />
+        <Point X="10.5" Y="0.683" />
+        <Point X="10.5" Y="0.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="To" Type="System.Net.Mail.MailAddress" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12" Y="1.329" />
+        <Point X="12.375" Y="1.329" />
+        <Point X="12.375" Y="0.688" />
+        <Point X="12" Y="0.688" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAgAAAAAAAIAAAAAABAAIAAAIAAAAAQAAAAA=</HashCode>
+      <FileName>IMailMessage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="From" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="To" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="MIMER.IMailReader" Collapsed="true">
+    <Position X="10.25" Y="5.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAgAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IMailReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.RFC2045.IDecoder" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>RFC2045\IDecoder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.RFC2045.IMimeMailMessage" Collapsed="true">
+    <Position X="10.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAABAAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>RFC2045\IMimeMailMessage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Attachments" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="MIMER.RFC2045.IAttachment">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAQAEAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>RFC2045\IAttachment.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.RFC2045.IEntity">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAABQAAAgAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RFC2045\IEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.15" />
+</ClassDiagram>

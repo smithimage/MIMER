@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MIMER.FieldParserDecorator">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>FieldParserDecorator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.PatternFactory">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAgACAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PatternFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MIMER.IMailReader">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAgAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IMailReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.IMailMessage">
+    <Position X="1" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAgAAAAAAAIAAAAAABAAIAAAIAAAAAQAAAAA=</HashCode>
+      <FileName>IMailMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.INullable">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>INullable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.IFieldParser">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>IFieldParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.RFC2045.IMimeMailMessage">
+    <Position X="1" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAABAAAAAEAAAABAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>RFC2045\IMimeMailMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.IEndCriteriaStrategy">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>IEndCriteriaStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIMER.IPattern" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>IPattern.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.15" />
+</ClassDiagram>

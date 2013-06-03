@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.15" />
+  <Class Name="MIMER.RFC822.Field">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>RFC822\Field.cs</FileName>
+      <HashCode>EIAAAACAAAJAAIBEIAABICQAIACAAACgAAQQAAAABAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="MIMER.RFC822.Message">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>RFC822\Message.cs</FileName>
+      <HashCode>AgBAAAAAAgAAAAWAAIAAAAAABAAIAAAgAAAAAQAAgAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIMER.RFC822.MailReader">
+    <Position X="0.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>RFC822\MailReader.cs</FileName>
+      <HashCode>IAAAAAAAAEAAAAAAAAAAACAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+</ClassDiagram>

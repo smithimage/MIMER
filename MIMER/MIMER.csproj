@@ -1,0 +1,207 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{45E121CB-8758-416E-B204-C867920A128A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MIMER</RootNamespace>
+    <AssemblyName>MIMER</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\MIMER.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataReadEventHandler.cs" />
+    <Compile Include="FieldParserDecorator.cs" />
+    <Compile Include="ICompiledPattern.cs" />
+    <Compile Include="IEndCriteriaStrategy.cs" />
+    <Compile Include="INullable.cs" />
+    <Compile Include="IPattern.cs" />
+    <Compile Include="PatternDecorator.cs" />
+    <Compile Include="PatternFactory.cs" />
+    <Compile Include="RFC1847\Pattern\SecureMultipartSubTypePattern.cs" />
+    <Compile Include="RFC2045\Base64Decoder.cs" />
+    <Compile Include="RFC2045\ContentTransferEncodingFieldParser.cs" />
+    <Compile Include="RFC2045\ContentTypeFieldParser.cs" />
+    <Compile Include="RFC2045\IEntity.cs" />
+    <Compile Include="RFC2045\IMultipartEntity.cs" />
+    <Compile Include="RFC2045\NullMessage.cs" />
+    <Compile Include="RFC2045\Pattern\ApplicationSubTypePatern.cs" />
+    <Compile Include="RFC2045\Pattern\AudioSubTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\BoundaryEndDelimiterPattern.cs" />
+    <Compile Include="RFC2045\Pattern\BoundaryStartDelimiterPattern.cs" />
+    <Compile Include="RFC2045\Pattern\CompositeTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\ContentTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\DiscreteTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\ContentTransferEncodingPattern.cs" />
+    <Compile Include="RFC2045\Pattern\ImageSubTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\MechanismPattern.cs" />
+    <Compile Include="RFC2045\Pattern\MessageSubTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\MultipartSubTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\SubTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\TextSubTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\TypePattern.cs" />
+    <Compile Include="RFC2183\Pattern\ContentDispositionPattern.cs" />
+    <Compile Include="RFC2183\Pattern\DispositionTypePattern.cs" />
+    <Compile Include="RFC2045\Pattern\ExtensionTokenPattern.cs" />
+    <Compile Include="RFC2045\Pattern\MIMEVersionPattern.cs" />
+    <Compile Include="RFC2045\Pattern\ParameterPattern.cs" />
+    <Compile Include="RFC2045\Pattern\ValuePattern.cs" />
+    <Compile Include="RFC2045\Pattern\XTokenPattern.cs" />
+    <Compile Include="RFC2047\ExtendedFieldParser.cs" />
+    <Compile Include="RFC2047\Pattern\CharsetPattern.cs" />
+    <Compile Include="RFC2047\Pattern\EncodedTextPattern.cs" />
+    <Compile Include="RFC2047\Pattern\EncodedWordPattern.cs" />
+    <Compile Include="RFC2047\Pattern\EncodingPattern.cs" />
+    <Compile Include="RFC2183\ContentDispositionField.cs" />
+    <Compile Include="RFC2183\ContentDispositionFieldParser.cs" />
+    <Compile Include="RFC2183\Pattern\CreationDateParmPattern.cs" />
+    <Compile Include="RFC2183\Pattern\DispositionParmPattern.cs" />
+    <Compile Include="RFC2183\Pattern\FilenameParmPattern.cs" />
+    <Compile Include="RFC2183\Pattern\ModificationDateParmPattern.cs" />
+    <Compile Include="RFC2183\Pattern\QuotedDateTimePattern.cs" />
+    <Compile Include="RFC2183\Pattern\ReadDateParmPattern.cs" />
+    <Compile Include="RFC2183\Pattern\SizeParmPattern.cs" />
+    <Compile Include="RFC2633\Pattern\SMIMEApplicationSubTypePattern.cs" />
+    <Compile Include="RFC2633\SMIMEFieldParser.cs" />
+    <Compile Include="RFC2633\SMIMETypeField.cs" />
+    <Compile Include="RFC822\EndOfLineStrategy.cs" />
+    <Compile Include="RFC822\FieldParser.cs" />
+    <Compile Include="RFC2045\IAttachment.cs" />
+    <Compile Include="RFC2045\Attachment.cs" />
+    <Compile Include="IFieldParser.cs" />
+    <Compile Include="RFC2045\IMimeMailMessage.cs" />
+    <Compile Include="RFC2045\IDecoder.cs" />
+    <Compile Include="RFC2045\MIMERException.cs" />
+    <Compile Include="RFC2045\MultipartEntity.cs" />
+    <Compile Include="RFC2045\ContentTransferEncodingField.cs" />
+    <Compile Include="RFC2045\ContentTypeField.cs" />
+    <Compile Include="IMailMessage.cs" />
+    <Compile Include="IMailReader.cs" />
+    <Compile Include="RFC2045\MailReader.cs" />
+    <Compile Include="RFC2045\Message.cs" />
+    <Compile Include="RFC2045\Entity.cs" />
+    <Compile Include="RFC2045\QuotedPrintableDecoder.cs" />
+    <Compile Include="RFC2046\CompositeMediaType.cs" />
+    <Compile Include="RFC2046\DiscreteMediaType.cs" />
+    <Compile Include="RFC822\Field.cs" />
+    <Compile Include="RFC822\MailReader.cs" />
+    <Compile Include="RFC822\Message.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RFC822\NullLineStrategy.cs" />
+    <Compile Include="RFC822\Pattern\AddrSpecPattern.cs" />
+    <Compile Include="RFC822\Pattern\AtomPattern.cs" />
+    <Compile Include="RFC822\Pattern\CommentPattern.cs" />
+    <Compile Include="RFC822\Pattern\CtextPattern.cs" />
+    <Compile Include="RFC822\Pattern\DatePattern.cs" />
+    <Compile Include="RFC822\Pattern\DateTimePattern.cs" />
+    <Compile Include="RFC822\Pattern\DayPattern.cs" />
+    <Compile Include="RFC822\Pattern\DisplayNamePattern.cs" />
+    <Compile Include="RFC822\Pattern\DomainLiteralPattern.cs" />
+    <Compile Include="RFC822\Pattern\DomainPattern.cs" />
+    <Compile Include="RFC822\Pattern\DomainRefPattern.cs" />
+    <Compile Include="RFC822\Pattern\DtextPattern.cs" />
+    <Compile Include="RFC822\Pattern\FieldBodyPattern.cs" />
+    <Compile Include="RFC822\Pattern\FieldNamePattern.cs" />
+    <Compile Include="RFC822\Pattern\FieldPattern.cs" />
+    <Compile Include="RFC822\Pattern\HourPattern.cs" />
+    <Compile Include="RFC822\Pattern\LocalPartPattern.cs" />
+    <Compile Include="RFC822\Pattern\MonthPattern.cs" />
+    <Compile Include="RFC822\Pattern\PhrasePattern.cs" />
+    <Compile Include="RFC822\Pattern\QuotedPairPattern.cs" />
+    <Compile Include="RFC822\Pattern\QuotedStringPattern.cs" />
+    <Compile Include="RFC822\Pattern\SpecialsPattern.cs" />
+    <Compile Include="RFC822\Pattern\SubDomainPattern.cs" />
+    <Compile Include="RFC822\Pattern\TimePattern.cs" />
+    <Compile Include="RFC822\Pattern\TokenPattern.cs" />
+    <Compile Include="RFC822\Pattern\TSpecialsPattern.cs" />
+    <Compile Include="RFC822\Pattern\UnfoldPattern.cs" />
+    <Compile Include="RFC822\Pattern\WordPattern.cs" />
+    <Compile Include="RFC822\Pattern\ZonePattern.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="RFC2045\RFC2045.cd" />
+    <None Include="RFC822\RFC822.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
