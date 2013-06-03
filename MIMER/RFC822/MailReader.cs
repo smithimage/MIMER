@@ -22,12 +22,12 @@ namespace MIMER.RFC822
     public class MailReader:IMailReader
     {
         protected FieldParser m_FieldParser;
-        protected DataReader m_DataReader;
         protected StringBuilder m_Source;
         protected long m_BytesRead;
 
         private long m_UpdateInterval = 1;
         private IPattern m_UnfoldPattern;
+        protected IEndCriteriaStrategy m_EndOfMessageCriteria;
 
         public MailReader()
         {
@@ -35,7 +35,6 @@ namespace MIMER.RFC822
             m_FieldParser.CompilePattern();
 
             m_UnfoldPattern = PatternFactory.GetInstance().Get(typeof (Pattern.UnfoldPattern));
-            m_DataReader = new DataReader() {Criterias = new List<IEndCriteriaStrategy>()};
         }
 
         #region IMailReader Members
@@ -44,15 +43,13 @@ namespace MIMER.RFC822
 
         public IMailMessage Read(ref System.IO.Stream dataStream, IEndCriteriaStrategy endOfMessageCriteria)
         {
+            m_EndOfMessageCriteria = endOfMessageCriteria;
             m_BytesRead = 0;
-            m_DataReader = new DataReader() {Criterias = new List<IEndCriteriaStrategy>()};
-            m_DataReader.Criterias.Add(endOfMessageCriteria);
 
             Message m = new Message();
             IMailMessage im = m as IMailMessage;            
             m_Source = new StringBuilder();
-            IList<RFC822.Field> fields;
-            var result = m_FieldParser.ParseFields(ref dataStream, m_DataReader);
+            var result = m_FieldParser.ParseFields(ref dataStream, new DataReader(endOfMessageCriteria));
             m.Fields = result.Data;
 
             if (result.FulfilledCritera >= 0)
@@ -90,15 +87,13 @@ namespace MIMER.RFC822
 
         protected DataReader.Result ReadHeaders(ref Stream dataStream)
         {
-            var dataReader = new DataReader();
-            dataReader.Criterias.Add(new EndOfLineStrategy());
-            dataReader.Criterias.Add(new NullLineStrategy());
-            return m_DataReader.ReadData(ref dataStream);                                    
+            var dataReader = new DataReader(m_EndOfMessageCriteria, new NullLineStrategy());
+            return dataReader.ReadData(ref dataStream);                                    
         }      
 
         protected void ReadBody(ref Stream dataStream, ref IMailMessage message)
-        {            
-            var result = m_DataReader.ReadData(ref dataStream);
+        {           
+            var result = new DataReader(m_EndOfMessageCriteria).ReadData(ref dataStream);
             string body = new string(result.Data);
             m_Source.Append(body);
             message.TextMessage = body;

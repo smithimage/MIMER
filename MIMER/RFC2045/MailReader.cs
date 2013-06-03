@@ -119,8 +119,8 @@ namespace MIMER.RFC2045
         /// <returns>A new IMimeMailMessage.</returns>
         public IMimeMailMessage ReadMimeMessage(ref System.IO.Stream dataStream, IEndCriteriaStrategy endOfMessageCriteria)
         {
-            m_DataReader = new DataReader();
-            m_DataReader.Criterias.Add(endOfMessageCriteria);
+
+            m_EndOfMessageCriteria = endOfMessageCriteria;
             
             if (dataStream == null)
                 throw new ArgumentNullException("dataStream");
@@ -172,7 +172,8 @@ namespace MIMER.RFC2045
                         e.Delimiter = ReadDelimiter(ref contentTypeField);                        
                         return ReadCompositeEntity(ref dataStream, ref e);                        
                     }
-                    else if (m_DiscretePattern.RegularExpression.IsMatch(contentTypeField.Type))
+                    
+                    if (m_DiscretePattern.RegularExpression.IsMatch(contentTypeField.Type))
                     {
                         IEntity e = message as IEntity;
                         message.BodyParts.Add(e);// This is a message witch body lies within its own entity                        
@@ -332,7 +333,7 @@ namespace MIMER.RFC2045
             
             int fulFilledCriteria;            
 
-            var dataReader = new DataReader(new EndOfLineStrategy(), new NullLineStrategy());
+            var dataReader = new DataReader(m_EndOfMessageCriteria, new EndOfLineStrategy());
 
             sBuilder = new StringBuilder();
             do
@@ -389,9 +390,7 @@ namespace MIMER.RFC2045
             int fulFilledCriteria;
             string line, delimiter;                        
 
-            var dataReader = new DataReader(new EndOfLineStrategy(), new NullLineStrategy());
-            delimiter = string.Empty;
-
+            var dataReader = new DataReader(m_EndOfMessageCriteria, new EndOfLineStrategy());
             do
             {
                 var result = dataReader.ReadData(ref dataStream);

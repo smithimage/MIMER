@@ -10,7 +10,7 @@ namespace MIMER.RFC822
     {
         public event DataReadEventHandler DataRead = null;
 
-        public IList<IEndCriteriaStrategy> Criterias { get; set; }
+        private IList<IEndCriteriaStrategy> Criterias { get; set; }
         
         protected long m_BytesRead;
         private long m_UpdateInterval = 1;
