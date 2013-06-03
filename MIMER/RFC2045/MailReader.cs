@@ -117,7 +117,8 @@ namespace MIMER.RFC2045
         /// <returns>A new IMimeMailMessage.</returns>
         public IMimeMailMessage ReadMimeMessage(ref System.IO.Stream dataStream, IEndCriteriaStrategy endOfMessageCriteria)
         {
-            m_EndOfMessageStrategy = endOfMessageCriteria;
+            m_DataReader = new DataReader();
+            m_DataReader.Criterias.Add(endOfMessageCriteria);
             
             if (dataStream == null)
                 throw new ArgumentNullException("dataStream");
@@ -328,14 +329,14 @@ namespace MIMER.RFC2045
             bool bContinue = true;            
             
             int fulFilledCriteria;            
-            m_Criterias.Clear();
-            m_Criterias.Add(m_EndOfMessageStrategy);
-            m_Criterias.Add(m_EndOfLineStrategy);
+
+            var dataReader = new DataReader(new EndOfLineStrategy(), new NullLineStrategy());
 
             sBuilder = new StringBuilder();
             do
-            {                   
-                cLine = ReadData(ref dataStream, m_Criterias, out fulFilledCriteria);                
+            {
+                var result = dataReader.ReadData(ref dataStream);
+                cLine = result.Data;
                 currentLine = new string(cLine);
                 boundary = FindDelimiter(ref entity, ref currentLine);
                 if (!string.IsNullOrEmpty(boundary))
@@ -344,32 +345,32 @@ namespace MIMER.RFC2045
                 }
 
                 // Have we found the end of this message?                
-                if (fulFilledCriteria < 0)
+                if (result.FulfilledCritera < 0)
                 {
                     boundary = string.Empty;
                     break;
                 }
-                sBuilder.Append(cLine);
+                sBuilder.Append(result.Data);
             }
             while (bContinue);
                         
             body = sBuilder.ToString();
             sBuilder.Append(cLine);
-            m_Source.Append(sBuilder.ToString());
+            m_Source.Append(sBuilder);
             return boundary;
         }
 
         private new int ParseFields(ref Stream dataStream, out IList<MIMER.RFC822.Field> fields)
         {
-            string headers;
-            int cause = ReadHeaders(ref dataStream, out headers);
+            var result =ReadHeaders(ref dataStream);
+            var headers = new string(result.Data);
             m_Source.Append(headers);
 
             headers = m_UnfoldPattern.RegularExpression.Replace(headers, " ");
             fields = new List<RFC822.Field>();
 
             m_FieldParser.Parse(ref fields, ref headers);            
-            return cause;
+            return result.FulfilledCritera;
         }
 
         private string ReadDelimiter(ref ContentTypeField contentTypeField)
@@ -385,17 +386,17 @@ namespace MIMER.RFC2045
         {            
             int fulFilledCriteria;
             string line, delimiter;                        
-            m_Criterias.Clear();
-            m_Criterias.Add(m_EndOfMessageStrategy);
-            m_Criterias.Add(m_EndOfLineStrategy);
 
+            var dataReader = new DataReader(new EndOfLineStrategy(), new NullLineStrategy());
             delimiter = string.Empty;
 
             do
-            {                
-                line = new string(ReadData(ref dataStream, m_Criterias, out fulFilledCriteria));
+            {
+                var result = dataReader.ReadData(ref dataStream);
+                fulFilledCriteria = result.FulfilledCritera;
+                line = new string(result.Data);
                 m_Source.Append(line);
-                if (fulFilledCriteria == 0)
+                if (result.FulfilledCritera == 0)
                 {
                     delimiter = string.Empty;
                     break;

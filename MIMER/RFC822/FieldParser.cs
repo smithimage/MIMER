@@ -12,6 +12,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 */
 
 using System.Collections.Generic;
+using System.IO;
 using MIMER.RFC822.Pattern;
 
 using System.Text.RegularExpressions;
@@ -24,6 +25,7 @@ namespace MIMER.RFC822
         protected IPattern m_FieldPattern;
         protected IPattern m_HeaderNamePattern;
         protected IPattern m_HeaderBodyPattern;
+        private DataReader m_DataReader;
        
        
         public FieldParser()
@@ -32,6 +34,13 @@ namespace MIMER.RFC822
             m_FieldPattern = PatternFactory.GetInstance().Get(typeof (FieldPattern));
             m_HeaderNamePattern = PatternFactory.GetInstance().Get(typeof (FieldNamePattern));
             m_HeaderBodyPattern = PatternFactory.GetInstance().Get(typeof (FieldBodyPattern));
+            m_DataReader = new DataReader();
+        }
+
+        public DataReader DataReader
+        {
+            get { return m_DataReader; }
+            set { m_DataReader = value; }
         }
 
         public virtual void CompilePattern()
@@ -56,5 +65,25 @@ namespace MIMER.RFC822
         }
 
         #endregion
+
+        public Result ParseFields(ref Stream dataStream, DataReader reader)
+        {
+            var result = reader.ReadData(ref dataStream);
+            var headers = new string(result.Data);
+            headers = m_UnfoldPattern.RegularExpression.Replace(headers, " ");
+             IList<RFC822.Field> fields = new List<RFC822.Field>();
+            Parse(ref fields, ref headers);
+            return new Result()
+                {
+                    Data = fields,
+                    FulfilledCritera = result.FulfilledCritera
+                };
+        }
+
+        public class Result
+        {
+            public IList<MIMER.RFC822.Field> Data { get; internal set; }
+            public int FulfilledCritera { get; internal set; }
+        }
     }
 }

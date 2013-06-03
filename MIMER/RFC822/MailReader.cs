@@ -22,10 +22,7 @@ namespace MIMER.RFC822
     public class MailReader:IMailReader
     {
         protected FieldParser m_FieldParser;
-        protected IList<IEndCriteriaStrategy> m_Criterias;
-        protected IEndCriteriaStrategy m_EndOfMessageStrategy;
-        protected IEndCriteriaStrategy m_EndOfLineStrategy;
-        protected IEndCriteriaStrategy m_NullLineStrategy;
+        protected DataReader m_DataReader;
         protected StringBuilder m_Source;
         protected long m_BytesRead;
 
@@ -36,11 +33,9 @@ namespace MIMER.RFC822
         {
             m_FieldParser = new FieldParser();
             m_FieldParser.CompilePattern();
-            m_Criterias = new List<IEndCriteriaStrategy>();
-            m_EndOfLineStrategy = new EndOfLineStrategy();
-            m_NullLineStrategy = new NullLineStrategy();
 
             m_UnfoldPattern = PatternFactory.GetInstance().Get(typeof (Pattern.UnfoldPattern));
+            m_DataReader = new DataReader() {Criterias = new List<IEndCriteriaStrategy>()};
         }
 
         #region IMailReader Members
@@ -50,15 +45,17 @@ namespace MIMER.RFC822
         public IMailMessage Read(ref System.IO.Stream dataStream, IEndCriteriaStrategy endOfMessageCriteria)
         {
             m_BytesRead = 0;
-            m_EndOfMessageStrategy = endOfMessageCriteria;
+            m_DataReader = new DataReader() {Criterias = new List<IEndCriteriaStrategy>()};
+            m_DataReader.Criterias.Add(endOfMessageCriteria);
+
             Message m = new Message();
             IMailMessage im = m as IMailMessage;            
             m_Source = new StringBuilder();
             IList<RFC822.Field> fields;
-            int cause = ParseFields(ref dataStream, out fields);
-            m.Fields = fields;
+            var result = m_FieldParser.ParseFields(ref dataStream, m_DataReader);
+            m.Fields = result.Data;
 
-            if (cause >= 0)
+            if (result.FulfilledCritera >= 0)
             {
                 ReadBody(ref dataStream, ref im);
             }
@@ -82,108 +79,30 @@ namespace MIMER.RFC822
 
         protected int ParseFields(ref Stream dataStream, out IList<MIMER.RFC822.Field> fields)
         {
-            string headers;
-            int cause = ReadHeaders(ref dataStream, out headers);
+            var result = ReadHeaders(ref dataStream);
+            var headers = new string(result.Data);
             m_Source.Append(headers);
             headers = m_UnfoldPattern.RegularExpression.Replace(headers, " ");
             fields = new List<RFC822.Field>();
             m_FieldParser.Parse(ref fields, ref headers);
-            return cause;
+            return result.FulfilledCritera;
         }
 
-        protected int ReadHeaders(ref System.IO.Stream dataStream, out string sHeaders)
+        protected DataReader.Result ReadHeaders(ref Stream dataStream)
         {
-            sHeaders = string.Empty;            
-            char[] headers;
-            int fulfilledCriteria;
-
-            m_Criterias.Clear();
-            m_Criterias.Add(m_EndOfMessageStrategy);
-            m_Criterias.Add(m_NullLineStrategy);
-            
-            headers = ReadData(ref dataStream, m_Criterias, out fulfilledCriteria);                                    
-            sHeaders = new string(headers);
-            return fulfilledCriteria;
+            var dataReader = new DataReader();
+            dataReader.Criterias.Add(new EndOfLineStrategy());
+            dataReader.Criterias.Add(new NullLineStrategy());
+            return m_DataReader.ReadData(ref dataStream);                                    
         }      
 
         protected void ReadBody(ref Stream dataStream, ref IMailMessage message)
         {            
-            char[] buffer;            
-            int fulFilledCriteria;
-
-            m_Criterias.Clear();
-            m_Criterias.Add(m_EndOfMessageStrategy);
-           
-            buffer = ReadData(ref dataStream, m_Criterias, out fulFilledCriteria);
-            string body = new string(buffer);
+            var result = m_DataReader.ReadData(ref dataStream);
+            string body = new string(result.Data);
             m_Source.Append(body);
             message.TextMessage = body;
         }                
-
-        protected char[] ReadData(ref Stream dataStream, IList<IEndCriteriaStrategy> criterias, out int fulfilledCritera)
-        {
-            fulfilledCritera = -1;
-            int size, pos, c;
-            char[] buffer, data;
-
-            size = 1;
-            pos = 0;
-            buffer = new char[size];
-
-            while ((c = dataStream.ReadByte()) != -1)
-            {
-                m_BytesRead++;
-                if ((m_BytesRead % m_UpdateInterval) == 0 && pos > 0)
-                {
-                    DataReadEventArgs args = new DataReadEventArgs();
-                    args.AmountRead = m_BytesRead;
-                    OnDataRead(this, args);
-                }
-
-                if (pos >= (size - 1))
-                {
-                    size = size * 2;
-                    char[] tmpBuffer = new char[size];
-                    buffer.CopyTo(tmpBuffer, 0);
-                    buffer = null;
-                    buffer = tmpBuffer;
-                }
-                buffer[pos] = (char)c;
-
-                if (pos > 0)
-                {
-                    int i = 0;
-                    foreach (IEndCriteriaStrategy criteria in criterias)
-                    {
-                        if (criteria.IsEndReached(buffer, pos))
-                        {
-                            fulfilledCritera = i;
-                            break;
-                        }
-                        i++;
-                    }
-                }
-
-                if (fulfilledCritera > -1)
-                {
-                    break;
-                }
-                pos++;
-            }
-
-            data = new char[pos + 1];
-            Array.Copy(buffer, data, pos + 1);
-            buffer = null;
-            return data;
-        }
-
-        protected void OnDataRead(object sender, DataReadEventArgs args)
-        {
-            if (DataRead != null)
-            {
-                DataRead(sender, args);
-            }
-        }
-        
+                
     }
 }

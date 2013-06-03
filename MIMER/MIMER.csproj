@@ -122,6 +122,7 @@
     <Compile Include="RFC2633\Pattern\SMIMEApplicationSubTypePattern.cs" />
     <Compile Include="RFC2633\SMIMEFieldParser.cs" />
     <Compile Include="RFC2633\SMIMETypeField.cs" />
+    <Compile Include="RFC822\DataReader.cs" />
     <Compile Include="RFC822\EndOfLineStrategy.cs" />
     <Compile Include="RFC822\FieldParser.cs" />
     <Compile Include="RFC2045\IAttachment.cs" />
