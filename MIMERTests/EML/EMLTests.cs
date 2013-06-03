@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 
 using MIMER.RFC2045;
+using MIMERTests.RFC2045;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
@@ -32,7 +33,7 @@ namespace MIMERTests.EML
         {
             Assert.IsNotNull(m_Stream);
             MIMER.RFC2045.MailReader m = new MailReader();
-            MIMER.IEndCriteriaStrategy endofmessage = new MIMERTests.RFC2045.MailReaderTests.EndOfMessageStrategy();
+            MIMER.IEndCriteriaStrategy endofmessage = new BasicEndOfMessageStrategy();
 
             MIMER.RFC2045.IMimeMailMessage message = m.ReadMimeMessage(ref m_Stream, endofmessage);
             Assert.AreEqual("eml@test.com", message.To[0].Address);
