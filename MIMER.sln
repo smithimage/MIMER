@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIMER", "MIMER\MIMER.csproj", "{45E121CB-8758-416E-B204-C867920A128A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIMERTests", "MIMERTests\MIMERTests.csproj", "{34C1BA4C-3A9A-44C3-B296-C0BB498A0A4E}"
