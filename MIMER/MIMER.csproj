@@ -80,6 +80,7 @@
     <Compile Include="RFC2045\BasicEndOfMessageStrategy.cs" />
     <Compile Include="RFC2045\ContentTransferEncodingFieldParser.cs" />
     <Compile Include="RFC2045\ContentTypeFieldParser.cs" />
+    <Compile Include="RFC2045\DelimiterFinder.cs" />
     <Compile Include="RFC2045\IEntity.cs" />
     <Compile Include="RFC2045\IMultipartEntity.cs" />
     <Compile Include="RFC2045\NullMessage.cs" />

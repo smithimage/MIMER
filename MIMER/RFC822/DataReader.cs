@@ -17,7 +17,7 @@ namespace MIMER.RFC822
 
         public DataReader(params IEndCriteriaStrategy[] endCriterias)
         {
-            Criterias = endCriterias;
+            Criterias = endCriterias.ToList();
         }
 
         public Result ReadData(ref Stream dataStream)

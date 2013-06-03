@@ -31,9 +31,8 @@ namespace MIMER.RFC2045
         private IPattern m_UnfoldPattern;
         private IPattern m_DiscretePattern;
         private IPattern m_CompositePattern;
-        private IPattern m_StartBoundaryPattern;
-        private IPattern m_EndBoundaryPattern;
         private IPattern m_MimeVersionPattern;
+        private static DelimiterFinder m_delimiterFinder;
 
 
         public IList<RFC2045.IDecoder> Decoders
@@ -64,8 +63,6 @@ namespace MIMER.RFC2045
             m_UnfoldPattern = PatternFactory.GetInstance().Get(typeof (UnfoldPattern));
             m_DiscretePattern = PatternFactory.GetInstance().Get(typeof (Pattern.DiscreteTypePattern));
             m_CompositePattern = PatternFactory.GetInstance().Get(typeof (Pattern.CompositeTypePattern));
-            m_StartBoundaryPattern = PatternFactory.GetInstance().Get(typeof (Pattern.BoundaryStartDelimiterPattern));
-            m_EndBoundaryPattern = PatternFactory.GetInstance().Get(typeof (Pattern.BoundaryEndDelimiterPattern));
             m_MimeVersionPattern = PatternFactory.GetInstance().Get(typeof (Pattern.MIMEVersionPattern));
         }
 
@@ -92,7 +89,12 @@ namespace MIMER.RFC2045
             m_FieldParser.CompilePattern();
         }
 
-       #region IMailReader Members
+        static MailReader()
+        {
+            m_delimiterFinder = new DelimiterFinder();
+        }
+
+        #region IMailReader Members
 
         /// <summary>
         /// Reads and parses a mail message from the supplied Stream.
@@ -338,7 +340,7 @@ namespace MIMER.RFC2045
                 var result = dataReader.ReadData(ref dataStream);
                 cLine = result.Data;
                 currentLine = new string(cLine);
-                boundary = FindDelimiter(ref entity, ref currentLine);
+                boundary = m_delimiterFinder.FindDelimiter(ref entity, ref currentLine);
                 if (!string.IsNullOrEmpty(boundary))
                 {
                     break;
@@ -402,7 +404,7 @@ namespace MIMER.RFC2045
                     break;
                 }
 
-                delimiter = FindDelimiter(ref entity, ref line);
+                delimiter = m_delimiterFinder.FindDelimiter(ref entity, ref line);
                 if (!string.IsNullOrEmpty(delimiter))
                 {                    
                     break;
@@ -411,46 +413,7 @@ namespace MIMER.RFC2045
             while (fulFilledCriteria >= 0);
             return delimiter;
         }
-
-        private string FindDelimiter(ref IEntity entity, ref string line)
-        {           
-            string boundary = string.Empty;            
-            if (m_EndBoundaryPattern.RegularExpression.IsMatch(line) ||
-                m_StartBoundaryPattern.RegularExpression.IsMatch(line))
-            {
-                Match match;
-                char[] cTrims = new char[] { '\\', '"' };
-                if (IsDelimiter(ref entity, ref line))
-                {
-                    if (m_EndBoundaryPattern.RegularExpression.IsMatch(line))
-                    {
-                        match = m_EndBoundaryPattern.RegularExpression.Match(line);
-                        boundary = match.Value.Trim();
-                        boundary = boundary.Trim(cTrims);                        
-                    }
-                    else if (m_StartBoundaryPattern.RegularExpression.IsMatch(line))
-                    {
-                        match = m_StartBoundaryPattern.RegularExpression.Match(line);
-                        boundary = match.Value.Trim();
-                        boundary = boundary.Trim(cTrims);                        
-                    }
-                }
-            }
-            return boundary;
-        }
-
-        private bool IsDelimiter(ref IEntity entity, ref string line)
-        {
-            IEntity test = entity;
-            while (test != null)
-            {
-               if(test.Delimiter != null && line.Contains(test.Delimiter))
-                   return true;
-                test = test.Parent;
-            }
-            return false;
-        }
-
+      
         private bool isMIME(ref IList<RFC822.Field> fields)
         {
             foreach (RFC822.Field field in fields)
