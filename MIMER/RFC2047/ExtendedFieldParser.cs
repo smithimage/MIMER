@@ -88,17 +88,17 @@ namespace MIMER.RFC2047
 
                     Encoding enc = Encoding.GetEncoding(charset);
 
-                    byte[] bar;
+                    byte[] bytes;
 
-                    if (encoding.ToLower().Equals("q"))
+                    if (m_QPDecoder.CanDecode(encoding))
                     {
-                        bar = m_QPDecoder.Decode(ref text);
+                        bytes = m_QPDecoder.Decode(ref text, charset);
                     }
                     else
                     {
-                        bar = m_B64decoder.Decode(ref text);
+                        bytes = m_B64decoder.Decode(ref text);
                     }                    
-                    text = enc.GetString(bar);
+                    text = enc.GetString(bytes);
 
                     field.Body = Regex.Replace(field.Body,
                         m_EncodedWordPattern.TextPattern, text);

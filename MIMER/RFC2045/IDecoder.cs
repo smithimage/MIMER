@@ -23,5 +23,7 @@ namespace MIMER.RFC2045
         byte[] Decode(ref System.IO.Stream dataStream);
 
         byte[] Decode(ref string data);
+
+        byte[] Decode(ref string data, string charset);
     }
 }

@@ -304,13 +304,12 @@ namespace MIMER.RFC2045
                                     return ParseMessage(ref dataStream, ref message, messageFields);
                                 break;
                             }
-                            else
-                            {
-                                mEntity.Delimiter = ReadDelimiter(ref contentTypeField);
-                                return parent.Delimiter;                                
-                            }                           
+                            
+                            mEntity.Delimiter = ReadDelimiter(ref contentTypeField);
+                            return parent.Delimiter;
                         }
-                        else if (m_DiscretePattern.RegularExpression.IsMatch(contentTypeField.Type))
+                        
+                        if (m_DiscretePattern.RegularExpression.IsMatch(contentTypeField.Type))
                         {
                             entity = new Entity();
                             entity.Fields = fields;

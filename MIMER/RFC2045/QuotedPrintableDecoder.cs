@@ -18,33 +18,13 @@ OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH  DAMAGE.
 */
 using System;
-using System.Collections.Generic;
 using System.Text;
-
-using System.Text.RegularExpressions;
 using System.Linq;
 
 namespace MIMER.RFC2045
 {
     public class QuotedPrintableDecoder : IDecoder
     {
-        private static readonly string s_CRLF = "(?<crlf>\x0D\x0A)";
-        private static readonly string s_LF = "(?<lf>\x0A)";
-        private static readonly string s_TransportPadding = "[\x5Cs]*";
-        private static readonly string s_HexOctet = "=[0-9A-F]{2,2}";
-        private static readonly string s_SafeChar = "[\x21-\x3C\x3E-\x7E]";
-        private static readonly string s_Ptext = "(" + s_HexOctet + "|" + s_SafeChar + ")";
-        private static readonly string s_QPsection = "((" + s_Ptext + "|\x20|\x09)*" + s_Ptext + ")";
-        private static readonly string s_QPsegment = "(" + s_QPsection + "(\x20|\x09)*=)";
-        private static readonly string s_QPpart = s_QPsection;
-
-        private static readonly string s_QPline = string.Format("(?<lines>({0}{1}({2}|{3}))*{4}{5})", s_QPsegment, 
-            s_TransportPadding, s_CRLF, s_LF, s_QPpart, s_TransportPadding);
-
-        private static readonly string s_QuotedPrintable = s_QPline + "(" + s_CRLF + s_QPline + ")*$";
-
-        private Regex m_REquotedPrintable = new Regex(s_QuotedPrintable, RegexOptions.Compiled);
-        private Regex m_REhexOctet = new Regex(s_HexOctet, RegexOptions.Compiled);
 
         public event EventHandler<EventArgs> DecodeError = null;
 
@@ -54,7 +34,7 @@ namespace MIMER.RFC2045
         public bool CanDecode(string encodign)
         {
             return string.IsNullOrEmpty(encodign) || encodign.ToLower().Equals("quoted-printable") || 
-                encodign.ToLower().Equals("7bit") || encodign.ToLower().Equals("8bit");
+                encodign.ToLower().Equals("7bit") || encodign.ToLower().Equals("8bit") || encodign.ToLower().Equals("q");
         }
 
         public byte[] Decode(ref System.IO.Stream dataStream)
@@ -119,61 +99,95 @@ namespace MIMER.RFC2045
 
         public byte[] Decode(ref string data)
         {
-            string decoded = DecodeToString(ref data);
-            return decoded.Select(c => Convert.ToByte(c)).ToArray();
+            return Decode(ref data, "iso-8859-1");
         }
 
-        private string DecodeToString(ref string data)
+        public byte[] Decode(ref string data, string charset)
         {
-            string decoded = String.Empty;
-            Match match = m_REquotedPrintable.Match(data);            
+            var encoding = Encoding.GetEncoding(charset);
+            return encoding.GetBytes(ConvertHexContent(data, encoding, 0));
+        }
 
-            if (match.Groups["lines"] != null)
+        private string ConvertHexToString(string hex, Encoding encoding)
+        {
+            if (string.IsNullOrEmpty(hex))
+                return string.Empty;
+
+            if (hex.StartsWith("="))
+                hex = hex.Substring(1);
+
+            string[] hexstrings = hex.Split(new[] { '=' });
+
+            var result = hexstrings.ToList()
+                .Select(hs => (byte)int.Parse(hs, System.Globalization.NumberStyles.HexNumber))
+                .ToArray();
+            return encoding.GetString(result);
+        }
+
+
+        public string ConvertHexContent(string hex, Encoding encoding, long nStart)
+        {
+            if (nStart >= hex.Length)
+                return hex;
+
+            var sbHex = new StringBuilder().Append("");
+            var sbEncoded = new StringBuilder().Append("");
+            var i = (int)nStart;
+
+            while (i < hex.Length)
             {
-                Group matchGroup = match.Groups["lines"];
-                int linefeeds = -1;
+                sbHex.Remove(0, sbHex.Length);
+                bool hasBegun = false;
 
-                if (match.Groups["crlf"] != null)
+                while (i < hex.Length)
                 {
-                    linefeeds = match.Groups["crlf"].Captures.Count;
-                }
-                else if(match.Groups["lf"] != null)
-                {
-                    linefeeds = match.Groups["lf"].Captures.Count;
-                }
-                
-                for (int i = 0; i < matchGroup.Captures.Count; i++)
-                {
-                    decoded += matchGroup.Captures[i].Value;
-
-                    if (linefeeds > 0)
+                    string temp = hex.Substring(i, 1);
+                    if (temp.StartsWith("="))
                     {
-                        decoded += Environment.NewLine;
-                        linefeeds--;
-                    }                    
-                }
-            }            
+                        temp = hex.Substring(i, 3);
+                        if (temp.EndsWith("\r\n"))
+                        {
+                            if (hasBegun)
+                                break;
+                            i = i + 3;
+                        }
+                        else if (!temp.EndsWith("3D"))
+                        {
+                            sbHex.Append(temp);
+                            hasBegun = true;
+                            i = i + 3;
+                        }
+                        else
+                        {
+                            if (hasBegun)
+                                break;
 
+                            sbEncoded.Append("=");
+                            i = i + 3;
+                        }
 
-            while (m_REhexOctet.IsMatch(decoded))
-            {
-                Match hexMatch = m_REhexOctet.Match(decoded);
-                string hex = hexMatch.Value.Substring(1);
-
-                try
-                {
-                    int number = Convert.ToInt32(hex, 16);
-                    char c = (char)number;
-                    decoded = Regex.Replace(decoded, hexMatch.Value, c.ToString());
+                    }
+                    else
+                    {
+                        if (hasBegun)
+                            break;
+                        sbEncoded.Append(temp);
+                        i++;
+                    }
                 }
-                catch(FormatException)
-                {
-                    OnDecodeError(this, new EventArgs());
-                    break;
-                }
-                
+                sbEncoded.Append(ConvertHexToString(sbHex.ToString(), encoding));
             }
-            return decoded;
+
+            return sbEncoded.ToString();
+        }
+
+        public string ConvertHexContent(string hex)
+        {
+            if (string.IsNullOrEmpty(hex))
+                return hex;
+
+            return ConvertHexContent(hex, Encoding.Default, 0);
+
         }
     }
 }

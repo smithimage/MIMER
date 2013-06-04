@@ -45,6 +45,11 @@ namespace MIMER.RFC2045
             return Convert.FromBase64String(data);
         }
 
+        public byte[] Decode(ref string data, string encoding)
+        {
+            return Decode(ref data);
+        }
+
         #endregion
     }
 }
