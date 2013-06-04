@@ -90,7 +90,6 @@
     <Compile Include="RFC2045\Pattern\BoundaryStartDelimiterPattern.cs" />
     <Compile Include="RFC2045\Pattern\CompositeTypePattern.cs" />
     <Compile Include="RFC2045\Pattern\ContentTypePattern.cs" />
-    <Compile Include="RFC2045\Pattern\DecodeQP.cs" />
     <Compile Include="RFC2045\Pattern\DiscreteTypePattern.cs" />
     <Compile Include="RFC2045\Pattern\ContentTransferEncodingPattern.cs" />
     <Compile Include="RFC2045\Pattern\ImageSubTypePattern.cs" />
