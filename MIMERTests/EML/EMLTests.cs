@@ -26,7 +26,7 @@ namespace MIMERTests.EML
             FileInfo finf = new FileInfo(path);
             m_Stream = new FileStream(finf.DirectoryName + "\\Resources\\Testing the _eml format.eml", FileMode.Open,
                 FileAccess.Read);
-                        }
+        }
 
         [Test]
         public void TestParse()

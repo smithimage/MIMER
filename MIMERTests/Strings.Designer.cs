@@ -94,6 +94,18 @@ namespace MIMERTests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content-Location: file:///C:/E11B6697/tmp5837_files/stylesheet.css
+        ///Content-Transfer-Encoding: quoted-printable
+        ///Content-Type: text/css; charset=&quot;windows-1252&quot;
+        ///.
+        /// </summary>
+        internal static string ContentType1 {
+            get {
+                return ResourceManager.GetString("ContentType1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Content-Type: multipart/alternative; boundary=&quot;_----------=_1161875317892621109&quot;
         ///Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
         ///Content-Type: text/html; charset=&quot;iso-8859-1&quot;.

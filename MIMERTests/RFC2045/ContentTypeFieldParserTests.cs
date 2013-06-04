@@ -5,6 +5,10 @@ using System.Text;
 using NUnit.Framework;
 using MIMER.RFC2045;
 using MIMER.RFC822;
+using NUnit.Framework.SyntaxHelpers;
+using System.Linq.Expressions;
+using System.Linq;
+
 
 namespace MIMERTests.RFC2045
 {
@@ -26,7 +30,6 @@ namespace MIMERTests.RFC2045
             string sFields = MIMERTests.Strings.ContentTypeFields;
             m_Parser.Parse(ref fields, ref sFields);
             Assert.AreEqual(6, fields.Count);
-
         }
     }
 }
