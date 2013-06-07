@@ -31,12 +31,49 @@ namespace MIMERTests.MHT
         public void TestThatCssFileGetsParsed()
         {
             Assert.IsNotNull(m_Stream);
-            var m = new MailReader();
+            var reader = new MailReader();
             MIMER.IEndCriteriaStrategy endofmessage = new BasicEndOfMessageStrategy();
-            var message = m.ReadMimeMessage(ref m_Stream, endofmessage);
+            var message = reader.ReadMimeMessage(ref m_Stream, endofmessage);
             Assert.That(message.Attachments.Count(a=>a.Type.Equals("text") && a.SubType.Equals("css")), Iz.EqualTo(1));
             
         }
+
+        [Test]
+        public void TestThatXmlFilesGetsParsed()
+        {
+            Assert.That(m_Stream, Iz.Not.Null);
+            MIMER.IEndCriteriaStrategy endofmessage = new BasicEndOfMessageStrategy();
+            var message = new MailReader().ReadMimeMessage(ref m_Stream, endofmessage);
+            Assert.That(message.Attachments.Count(a => a.Type.Equals("text") && a.SubType.Equals("xml")), Iz.EqualTo(1));
+        }
+
+        [Test]
+        public void TestThatCorrectNumberOfAttachmentsGetsParsed()
+        {
+            Assert.That(m_Stream, Iz.Not.Null);
+            MIMER.IEndCriteriaStrategy endofmessage = new BasicEndOfMessageStrategy();
+            var message = new MailReader().ReadMimeMessage(ref m_Stream, endofmessage);
+            Assert.That(message.Attachments.Count(), Iz.EqualTo(117));
+        }
+
+        [Test]
+        public void TestThatCorrectNumberOfImagesGetsParsed()
+        {
+            Assert.That(m_Stream, Iz.Not.Null);
+            MIMER.IEndCriteriaStrategy endofmessage = new BasicEndOfMessageStrategy();
+            var message = new MailReader().ReadMimeMessage(ref m_Stream, endofmessage);
+            Assert.That(message.Attachments.Count(a => a.Type.Equals("image")), Iz.EqualTo(105));
+        }
+
+        [Test]
+        public void TestThatCorrectNumberOfHtmlDocumentsGetsParsed()
+        {
+            Assert.That(m_Stream, Iz.Not.Null);
+            MIMER.IEndCriteriaStrategy endofmessage = new BasicEndOfMessageStrategy();
+            var message = new MailReader().ReadMimeMessage(ref m_Stream, endofmessage);
+            Assert.That(message.Attachments.Count(a => a.Type.Equals("text") && a.SubType.Equals("html")), Iz.EqualTo(10));
+        }
+
 
     }
 }

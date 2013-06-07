@@ -5,7 +5,7 @@ namespace MIMER.RFC2045.Pattern
 {
     public class TextSubTypePattern:IPattern
     {
-        private const string m_TextPattern = "(calendar|plain|enriched|html|x-vcard|css)";
+        private const string m_TextPattern = "(calendar|plain|enriched|html|x-vcard|css|xml)";
         private Regex m_Regex;
 
         public TextSubTypePattern()
