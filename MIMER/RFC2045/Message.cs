@@ -275,17 +275,19 @@ namespace MIMER.RFC2045
             }            
         }
 
-        private void LoadBody(Entity parent)
+        private void LoadBody(IEntity parent)
         {
             if (parent is MultipartEntity)
             {
                 MultipartEntity mpe = parent as MultipartEntity;
-                foreach (Entity child in mpe.BodyParts)
-                {
-                    if(child != parent && !(child is Message))
-                        LoadBody(child);
-                }
+
+                mpe.BodyParts
+                    .Where(child=>child != parent && !(child is Message))
+                    .ToList()
+                    .ForEach(LoadBody);
             }
+
+
 
             ContentTypeField contentTypeField = null;
             ContentDispositionField contentDispositionField = null;
