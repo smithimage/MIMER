@@ -24,9 +24,11 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH  DAMAGE.
 */
 
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using MIMER.RFC2045;
+using MIMER.RFC822;
 
 namespace MIMER.RFC2183
 {
@@ -60,6 +62,11 @@ namespace MIMER.RFC2183
             return field.Disposition.ToLower().Equals("attachment");
         }
 
+        public static bool IsInline(this ContentDispositionField field)
+        {
+            return field.Disposition.ToLower().Equals("inline");
+        }
+
         public static ContentDispositionField GetDispositionField(this IEntity entity)
         {
             return entity.Fields.FirstOrDefault(field => field is ContentDispositionField) as ContentDispositionField;
@@ -68,6 +75,11 @@ namespace MIMER.RFC2183
         public static bool IsAttachment(this IEntity entity)
         {
             return entity.GetDispositionField() != null && entity.GetDispositionField().IsAttachment();
+        }
+
+        public static T FindField<T>(this IEntity entity) where T : Field
+        {
+            return entity.Fields.FirstOrDefault(field => field.GetType().Equals(typeof(T))) as T;
         }
     }
 }

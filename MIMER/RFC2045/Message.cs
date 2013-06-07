@@ -357,12 +357,9 @@ namespace MIMER.RFC2045
                     else if (child is Message)
                     {
                         ContentDispositionField field = child.GetDispositionField();
-                        if (field == null ||
-                            !(field.Disposition.ToLower().Equals("attachment") &&
-                              field.Disposition.ToLower().Equals("inline")))
+                        if (field == null || !(field.IsAttachment() && field.IsInline()))
                         {
-                            Message message = child as Message;
-                            m_Messages.Add(message);
+                            m_Messages.Add(child as Message);
                         }
 
                     }   
@@ -398,8 +395,8 @@ namespace MIMER.RFC2045
 
         private void AttachEntity(IEntity entity)
         {
-            ContentDispositionField dispositionField = FindField(entity, typeof(ContentDispositionField)) as ContentDispositionField;
-            ContentTypeField contentTypeField = FindField(entity, typeof(ContentTypeField)) as ContentTypeField;
+            ContentDispositionField dispositionField = entity.FindField<ContentDispositionField>();
+            ContentTypeField contentTypeField = entity.FindField<ContentTypeField>();
 
             if (dispositionField == null && contentTypeField == null)
                 return;
@@ -419,11 +416,6 @@ namespace MIMER.RFC2045
                 attachment.SubType = contentTypeField.SubType;
                 m_Attachments.Add(attachment);
             }
-        }
-
-        private Field FindField(IEntity entity, Type type)
-        {
-            return entity.Fields.FirstOrDefault(field => field.GetType().Equals(type));
         }
 
         private string GetAttachmentName(ContentDispositionField dispositionField, ContentTypeField contentTypeField)
