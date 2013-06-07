@@ -16,7 +16,7 @@ using System.Text;
 
 namespace MIMER.RFC2045
 {
-    public interface IAttachment
+    public interface IAttachment: INullable
     {
         string Type
         {

@@ -378,67 +378,14 @@ namespace MIMER.RFC2045
                     {
                         LoadAttachments(entity);
                     }
-                    else if (!(entity is MultipartEntity) && !(entity is Message))
+                    else if ((!(entity is MultipartEntity) && !(entity is Message)) || entity.IsAttachment())
                     { 
-                        AttachEntity(entity);
-                    }
-                    else
-                    {
-                        if (entity.IsAttachment())
-                        {
-                            AttachEntity(entity);
-                        }
+                        m_Attachments.Add(entity.AsAttachment());
                     }
                 }                    
             }            
         }
-
-        private void AttachEntity(IEntity entity)
-        {
-            ContentDispositionField dispositionField = entity.FindField<ContentDispositionField>();
-            ContentTypeField contentTypeField = entity.FindField<ContentTypeField>();
-
-            if (dispositionField == null && contentTypeField == null)
-                return;
-
-            if (contentTypeField != null)
-            {
-                IAttachment attachment = new Attachment();
-
-                if (dispositionField != null)
-                {
-                    attachment.Disposition = dispositionField.Disposition;
-                }
-
-                attachment.Name = GetAttachmentName(dispositionField, contentTypeField);
-                attachment.Data = entity.Body;
-                attachment.Type = contentTypeField.Type;
-                attachment.SubType = contentTypeField.SubType;
-                m_Attachments.Add(attachment);
-            }
-        }
-
-        private string GetAttachmentName(ContentDispositionField dispositionField, ContentTypeField contentTypeField)
-        {
-            string name;
-            if (dispositionField == null)
-            {
-                name = contentTypeField.Parameters["name"];
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(dispositionField.Parameters["filename"]))
-                {
-                    name = contentTypeField.Parameters["name"];
-                }
-                else
-                {
-                    name = dispositionField.Parameters["filename"];
-                }
-            }
-            return name;
-        }
-
+        
         private MailAddressCollection LoadFrom()
         {
             MailAddressCollection addressCollection = new MailAddressCollection();
@@ -546,19 +493,20 @@ namespace MIMER.RFC2045
             if(TextMessage != null)
                 message.Body = this.TextMessage.ToString();
 
-            foreach (IAttachment attachment in this.Attachments)
-            {
-                System.IO.MemoryStream stream = new System.IO.MemoryStream(attachment.Data);
-                message.Attachments.Add(new System.Net.Mail.Attachment(stream, attachment.Name,
-                    attachment.Type + "/" + attachment.SubType));
-            }
+            Attachments
+                .Where(attachment => !attachment.IsNull())
+                .ToList()
+                .ForEach(attachment =>
+                    {
+                        System.IO.MemoryStream stream = new System.IO.MemoryStream(attachment.Data);
+                        message.Attachments.Add(new System.Net.Mail.Attachment(stream, attachment.Name,
+                            attachment.Type + "/" + attachment.SubType));
+                    });
 
-            foreach (AlternateView view in Views)
-            {
-                AlternateView aView = new AlternateView(view.ContentStream, view.ContentType.MediaType);
-                message.AlternateViews.Add(aView);
-                
-            }
+
+            Views.Select(view => new AlternateView(view.ContentStream, view.ContentType.MediaType))
+                    .ToList()
+                    .ForEach(alternateView => message.AlternateViews.Add(alternateView));
 
             return message;
         }

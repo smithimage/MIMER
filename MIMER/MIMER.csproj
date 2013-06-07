@@ -83,6 +83,8 @@
     <Compile Include="RFC2045\DelimiterFinder.cs" />
     <Compile Include="RFC2045\IEntity.cs" />
     <Compile Include="RFC2045\IMultipartEntity.cs" />
+    <Compile Include="RFC2045\MessageExtentions.cs" />
+    <Compile Include="RFC2045\NullAttachment.cs" />
     <Compile Include="RFC2045\NullMessage.cs" />
     <Compile Include="RFC2045\Pattern\ApplicationSubTypePatern.cs" />
     <Compile Include="RFC2045\Pattern\AudioSubTypePattern.cs" />

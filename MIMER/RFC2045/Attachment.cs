@@ -86,5 +86,10 @@ namespace MIMER.RFC2045
                 return new MemoryStream(m_Data);                
             }            
         }
+
+        public bool IsNull()
+        {
+            return false;
+        }
     }
 }

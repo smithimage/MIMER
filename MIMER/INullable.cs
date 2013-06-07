@@ -16,7 +16,7 @@ using System.Text;
 
 namespace MIMER
 {
-    interface INullable
+    public interface INullable
     {
         bool IsNull();
     }
