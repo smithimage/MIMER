@@ -356,7 +356,7 @@ namespace MIMER.RFC2045
                     }
                     else if (child is Message)
                     {
-                        ContentDispositionField field = GetDispositionField(child);
+                        ContentDispositionField field = child.GetDispositionField();
                         if (field == null ||
                             !(field.Disposition.ToLower().Equals("attachment") &&
                               field.Disposition.ToLower().Equals("inline")))
@@ -387,29 +387,13 @@ namespace MIMER.RFC2045
                     }
                     else
                     {
-                        ContentDispositionField field = GetDispositionField(entity);
-                        if (field != null)
+                        if (entity.IsAttachment())
                         {
-                            if (field.Disposition.ToLower().Equals("attachment"))
-                            {
-                                AttachEntity(entity);
-                            }
+                            AttachEntity(entity);
                         }
                     }
                 }                    
             }            
-        }
-
-        private ContentDispositionField GetDispositionField(IEntity entity)
-        {
-            foreach(RFC822.Field field in entity.Fields)
-            {
-                if(field is ContentDispositionField)
-                {
-                    return field as ContentDispositionField;
-                }
-            }
-            return null;
         }
 
         private void AttachEntity(IEntity entity)
@@ -437,17 +421,9 @@ namespace MIMER.RFC2045
             }
         }
 
-        private Field FindField(IEntity entity, Type t)
+        private Field FindField(IEntity entity, Type type)
         {
-            foreach (RFC822.Field field in entity.Fields)
-            {
-                if (field.GetType().Equals(t))
-                {
-                    return field;
-                }
-            }
-
-            return null;
+            return entity.Fields.FirstOrDefault(field => field.GetType().Equals(type));
         }
 
         private string GetAttachmentName(ContentDispositionField dispositionField, ContentTypeField contentTypeField)

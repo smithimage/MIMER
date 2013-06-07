@@ -23,10 +23,10 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH  DAMAGE.
 */
-using System;
-using System.Collections.Generic;
+
 using System.Collections.Specialized;
-using System.Text;
+using System.Linq;
+using MIMER.RFC2045;
 
 namespace MIMER.RFC2183
 {
@@ -50,6 +50,24 @@ namespace MIMER.RFC2183
         {
             get { return this.m_Disposition; }
             set { this.m_Disposition = value; }
+        }
+    }
+
+    public static class ContentDispositionFieldExtensions
+    {
+        public static bool IsAttachment(this ContentDispositionField field)
+        {
+            return field.Disposition.ToLower().Equals("attachment");
+        }
+
+        public static ContentDispositionField GetDispositionField(this IEntity entity)
+        {
+            return entity.Fields.FirstOrDefault(field => field is ContentDispositionField) as ContentDispositionField;
+        }
+
+        public static bool IsAttachment(this IEntity entity)
+        {
+            return entity.GetDispositionField() != null && entity.GetDispositionField().IsAttachment();
         }
     }
 }
