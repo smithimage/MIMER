@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MIMER</id>
-    <version>0.1.0</version>
+    <version>0.7.0</version>
     <title>MIMER</title>
     <authors>Robert Wallström</authors>
     <owners>Robert Wallström</owners>
@@ -17,7 +17,7 @@
     <language>en-US</language>
     <projectUrl>https://github.com/smithimage/MIMER/</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <licenseUrl>http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5</licenseUrl>
+    <licenseUrl>https://github.com/smithimage/MIMER/blob/master/License.md</licenseUrl>
     <copyright>Copyright  2007</copyright>    
   </metadata>
   <files>
